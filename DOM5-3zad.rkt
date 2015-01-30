@@ -1,0 +1,12 @@
+(define (reversed list1)
+  (if(null? list1)
+     '()
+     (append (reversed (cdr list1)) (list (car list1)))))
+(define (last-index list1 n)
+  (define (last-index-helper list1 list2 n iter)
+       (if(= (car list2) n)
+          (- (length list1) (+ iter 1))
+          (last-index-helper list1 (cdr list2) n (+ iter 1))))
+  (if(not (is-in-list list1 n))
+     -1
+     (last-index-helper list1 (reversed list1) n 0)))

@@ -1,0 +1,26 @@
+(define (is-in-list list1 a)
+  (if(null? list1)
+     #f
+     (if(= (car list1) a) 
+        #t
+        (is-in-list (cdr list1) a))))
+(define (uniq list1)
+  (define (uniq-helper list1 list2)
+    (if(null? list1)
+       list2
+       (if(not (is-in-list list2 (car list1)))
+          (uniq-helper (cdr list1) (append list2 (list (car list1))))
+          (uniq-helper (cdr list1) list2))))
+  (uniq-helper list1 '()))
+(define (occ list1 n)
+  (if(null? list1)
+     0
+     (if(= n (car list1))
+        (+ 1 (occ (cdr list1) n))
+        (occ (cdr list1) n))))
+(define (counts list1)
+  (define (counts-helper list1 list2)
+    (if(null? list2)
+       '()
+       (append (list (cons (car list2) (occ list1 (car list2)))) (counts-helper list1 (cdr list2)))))
+  (counts-helper list1 (uniq list1)))
